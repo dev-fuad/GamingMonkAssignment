@@ -28,7 +28,7 @@ const setLoadingAction = payload => ({
 
 const _fetchMovies = async (page, dispatch) => {
   try {
-    dispatch(setLoading(true));
+    dispatch(setLoadingAction(true));
     const moviesResponse = await fetchMovies(page);
     return {
       topTen: moviesResponse.results.slice(0, 10),
