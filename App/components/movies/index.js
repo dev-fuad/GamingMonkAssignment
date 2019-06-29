@@ -6,6 +6,7 @@ import {
   Image,
   FlatList,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -54,9 +55,10 @@ const _renderItem = ({ item }) => <MovieCard movie={item} />;
 
 const Movies = () => {
   const dispatch = useDispatch();
-  const { movies, isLoading } = useSelector(state => ({
+  const { movies, isLoading, haveMore } = useSelector(state => ({
     movies: state.movies,
     isLoading: state.isLoading,
+    haveMore: state.haveMore,
   }));
 
   useEffect(() => {
@@ -69,11 +71,17 @@ const Movies = () => {
       <FlatList
         data={movies}
         renderItem={_renderItem}
-        refreshing={isLoading}
-        ListFooterComponent={<Footer />}
+        ListFooterComponent={haveMore && <Footer />}
         keyExtractor={item => `${item.id}`}
         contentContainerStyle={styles.scrollContent}
       />
+      {isLoading && (
+        <ActivityIndicator
+          style={styles.indicator}
+          size="large"
+          color="#FBD043"
+        />
+      )}
     </View>
   );
 };

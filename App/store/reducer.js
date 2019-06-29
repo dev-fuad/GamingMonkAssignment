@@ -14,6 +14,7 @@ const InitialState = {
     total: 1,
   },
   isLoading: false,
+  haveMore: true,
 };
 
 export default (state = InitialState, action) => {
@@ -23,16 +24,20 @@ export default (state = InitialState, action) => {
         movies: action.payload.topTen,
         cached: action.payload.otherTen,
         page: {
-          index: 1,
+          index: action.payload.page,
           total: action.payload.totalPages,
         },
         isLoading: false,
+        haveMore:
+          action.payload.page < action.payload.totalPages ||
+          action.payload.otherTen.length > 0,
       };
     case LOAD_CACHED:
       return {
         ...state,
         movies: [...state.movies, ...state.cached],
         cached: [],
+        haveMore: state.page.index < state.page.total,
       };
     case LOAD_MORE_MOVIES:
       return {
@@ -43,6 +48,9 @@ export default (state = InitialState, action) => {
           index: action.payload.page,
         },
         isLoading: false,
+        haveMore:
+          action.payload.page < state.page.total ||
+          action.payload.otherTen.length > 0,
       };
     case SET_LOADING:
       return {

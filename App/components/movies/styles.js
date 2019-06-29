@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 15,
   },
+  indicator: StyleSheet.absoluteFill,
 });
 
 export default styles;
