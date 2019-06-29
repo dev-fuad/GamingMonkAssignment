@@ -54,6 +54,15 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#BBB',
   },
+  loadMoreButton: {
+    alignSelf: 'flex-end',
+    backgroundColor: '#FBD043',
+    borderRadius: 10,
+    marginRight: 20,
+    marginBottom: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+  },
 });
 
 export default styles;

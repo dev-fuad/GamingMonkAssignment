@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { loadMovies, likeMovie } from '../../store/actions';
+import { loadMovies, loadMore, likeMovie } from '../../store/actions';
 import styles from './styles';
 
 const IMAGE_BASE = 'https://image.tmdb.org/t/p/original';
@@ -40,12 +40,24 @@ const MovieCard = ({ movie }) => {
   );
 };
 
+const Footer = () => {
+  const dispatch = useDispatch();
+  const onLoadMoreClicked = () => dispatch(loadMore());
+  return (
+    <TouchableOpacity style={styles.loadMoreButton} onPress={onLoadMoreClicked}>
+      <Text>Load More...</Text>
+    </TouchableOpacity>
+  );
+};
+
 const _renderItem = ({ item }) => <MovieCard movie={item} />;
 
 const Movies = () => {
-  const movies = useSelector(state => state.movies);
   const dispatch = useDispatch();
-  console.log('movies', movies);
+  const { movies, isLoading } = useSelector(state => ({
+    movies: state.movies,
+    isLoading: state.isLoading,
+  }));
 
   useEffect(() => {
     dispatch(loadMovies());
@@ -57,6 +69,8 @@ const Movies = () => {
       <FlatList
         data={movies}
         renderItem={_renderItem}
+        refreshing={isLoading}
+        ListFooterComponent={<Footer />}
         keyExtractor={item => `${item.id}`}
         contentContainerStyle={styles.scrollContent}
       />

@@ -30,7 +30,7 @@ export default (state = InitialState, action) => {
       };
     case LOAD_CACHED:
       return {
-        ...store,
+        ...state,
         movies: [...state.movies, ...state.cached],
         cached: [],
       };
@@ -39,7 +39,7 @@ export default (state = InitialState, action) => {
         movies: [...state.movies, ...action.payload.topTen],
         cached: action.payload.otherTen,
         page: {
-          ...store.page,
+          ...state.page,
           index: action.payload.page,
         },
         isLoading: false,
