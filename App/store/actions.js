@@ -5,7 +5,7 @@ import {
   SET_LOADING,
 } from './types';
 import { fetchMovies } from '../providers/api';
-import store from '../index';
+import store from './index';
 
 const loadMoviesAction = payload => ({
   type: LOAD_MOVIES,
