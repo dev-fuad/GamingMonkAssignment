@@ -2,6 +2,7 @@ import {
   LOAD_MOVIES,
   LOAD_CACHED,
   LOAD_MORE_MOVIES,
+  LIKE_MOVIE,
   SET_LOADING,
 } from './types';
 import { fetchMovies } from '../providers/api';
@@ -18,6 +19,11 @@ const loadCachedAction = () => ({
 
 const loadMoreAction = payload => ({
   type: LOAD_MORE_MOVIES,
+  payload,
+});
+
+const likeMovieAction = payload => ({
+  type: LIKE_MOVIE,
   payload,
 });
 
@@ -57,4 +63,8 @@ export const loadMore = () => async dispatch => {
   } else {
     dispatch(loadCachedAction());
   }
+};
+
+export const likeMovie = id => dispatch => {
+  dispatch(likeMovieAction({ id }));
 };

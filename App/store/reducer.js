@@ -2,6 +2,7 @@ import {
   LOAD_MOVIES,
   LOAD_CACHED,
   LOAD_MORE_MOVIES,
+  LIKE_MOVIE,
   SET_LOADING,
 } from './types';
 
@@ -47,6 +48,14 @@ export default (state = InitialState, action) => {
       return {
         ...state,
         isLoading: action.payload,
+      };
+    case LIKE_MOVIE:
+      return {
+        ...state,
+        movies: state.movies.map(movie => ({
+          ...movie,
+          liked: action.payload.id === movie.id ? !movie.liked : movie.liked,
+        })),
       };
 
     default:

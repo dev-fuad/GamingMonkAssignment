@@ -9,12 +9,14 @@ import {
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { loadMovies } from '../../store/actions';
+import { loadMovies, likeMovie } from '../../store/actions';
 import styles from './styles';
 
 const IMAGE_BASE = 'https://image.tmdb.org/t/p/original';
 
-const movieCard = ({ item: movie }) => {
+const MovieCard = ({ movie }) => {
+  const dispatch = useDispatch();
+  const onLikeClicked = () => dispatch(likeMovie(movie.id));
   return (
     <View style={styles.card}>
       <View style={styles.cardContent}>
@@ -29,14 +31,16 @@ const movieCard = ({ item: movie }) => {
         <TouchableOpacity
           style={styles.like}
           activeOpacity={0.7}
-          onPress={() => {}}
+          onPress={onLikeClicked}
         >
-          <Text>{true ? '👍' : '👎'}</Text>
+          <Text>{movie.liked ? '👎' : '👍'}</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
+
+const _renderItem = ({ item }) => <MovieCard movie={item} />;
 
 const Movies = () => {
   const movies = useSelector(state => state.movies);
@@ -52,7 +56,7 @@ const Movies = () => {
       <StatusBar translucent={true} barStyle="dark-content" />
       <FlatList
         data={movies}
-        renderItem={movieCard}
+        renderItem={_renderItem}
         keyExtractor={item => `${item.id}`}
         contentContainerStyle={styles.scrollContent}
       />
